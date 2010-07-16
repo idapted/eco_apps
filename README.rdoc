@@ -1,0 +1,130 @@
+= co-app-node
+
+rails_platform_base is 'client' gem for rails applications to interact with each other in a rails application ecosystem. It will post app's configuration to 'master' app (which is powered by rails_platform_core) and provide interacting utilities, like web services, read only databaes connection and url helper method.
+
+If you want to use factory_girl with Rails 3, use the factory_girl_rails gem, not this one.
+
+== Download
+
+Github: http://github.com/thoughtbot/factory_girl/tree/master
+
+Gem:
+  gem install factory_girl
+
+== How does this work?
+
+As your business grows bigger, you just can’t stop adding new models/controllers to your original rails application – resulting in a messy, unmaintainable and difficult to deploy monolithic application. By splitting a single rails “application-system” into many independently maintainable yet interconnected applications, you can get many benefits like lower development time, greater stability and scalability and much higher developer happiness.
+
+In this rails application ecosystem, there's one application playing the master role. It manages the configuration info of all the applications. The 'node' applciation keeps its configuration in one file and post this to master app when server starts. The node app will ask master app for another node's info when they interact with each other. All these process are packaged in gems co-app-master and co-app-node.
+
+co-app-master is used by master application. Any application using this gem will becomes master app. co-app-node is used by node application. One app will join this ecosystem when using co-app-node. One app can be both master and node, but it need to require 'co-app-master' before 'co-app-node'.
+
+== Get started fresh
+
+=== Business logic
+Suppose we are going to build an petstore. The features are split info two groups. One is for pet info management and another is order info management. We are going to have two rails application to accomplish this, called 'pet' and 'order' seperately.
+
+=== Create rails project
+Create the two rails application and add necessary models/controllers.
+
+pet:
+  rails pet
+  ruby script/generate model dog
+  ruby script/generate controller dogs
+
+order:
+  rails order
+  ruby script/generate model order
+  ruby script/generate controller orders
+
+It's easy and normal to add functions for pet application. However, it comes to some problem when creating order, because one order need to know the dog info. So we need to enable the two application interacting with each other.
+
+=== Readonly database connection
+Suppose in the index of order application, we will have a list of all dogs for user to select. As there's no other logic for dogs except listing the basic info, the most easy and efficient way is to read data from dogs database. To keep the structure clear, it's better to make this connection read only, so that the dogs info can only be modified in pet application.
+
+To set up the db connection, order need to know the db config of pet. It makes sense here for order to ask pet this info, but when there's many applications, the communication channel will be too complex. So we can choose one application to be 'master', it knows the config info of all applications. The node application can get info of others from 'master'.
+
+In this situation, we choose pet as master application (surely choose order is the same).
+  # pet/config/environment.rb
+  Rails::Initializer.run do |config|
+    config.gem 'co-app-master'
+  end
+
+When restart server the first time, you can see that it will create one table called "apps" to store apps' info.
+
+Now we'd like to join pet and order into this ecosystem as a node.
+  # pet/config/environment.rb
+  Rails::Initializer.run do |config|
+    config.gem 'co-app-master'
+    config.gem 'co-app-node'
+  end
+
+  # order/config/environment.rb
+  Rails::Initializer.run do |config|
+    config.gem 'co-app-node'
+  end
+
+Start pet at port 3000, you will find that it will raise exception saying 'please set name in RAILS_ROOT/config/app_config.yml' and also a yml file 'app_config.yml' under config.
+This file is to keep app's configuration, including name, url, api, etc.
+Set the name and url of pet app.
+  # pet/config/app_config.yml
+  name: pet
+  url: http://localhost:3000
+  core_root: http://localhost:3000
+
+Start order at port 3001, do the same thing as pet.
+  # pet/config/app_config.yml
+  name: order
+  url: http://localhost:3001
+  core_root: http://localhost:3000
+
+Start pet firstly, and then order, you can see that order is posting its info to master(pet here) app.
+
+Now we can make use of gem units to make it very easy for readonly db connection.
+
+  # order/app/models/dog.rb
+  class Dog < ActiveRecord::Base
+    acts_as_readonly :pet
+  end
+
+  class Order < ActiveRecord::Base
+    belongs_to :dog
+  end
+
+In this way, you can use dog just as normal active_record objects, the only difference is that it read data from pet's database and it can not modify records.
+
+=== navigation between apps
+As the logic are basically in its own application, it's common that you need to go to a page in other app. One example is that the detail info page of a dog should be in pet app, and you need to link to this page in order app.
+
+It's easy to hard code the page url in order app, like
+  <%= link_to "view detail", "http://localhost:3001/dogs/#{dog.id}" %>
+
+However, this will cause tightly coherent between apps and if the url of this page changed, code also need to be changed in order app.
+
+We can provide one api of pet for this. Other apps access this page through this api. 
+  # pet/config/app_config.yml
+  api:
+    url:
+      dog_detail: /dogs/:id
+
+  # order/orders/index.html.erb
+  <%= link_to "view detail", url_of(:pet, :dog_detail, :id => dog.id) %>
+
+=== web services
+Sometimes it's unavoidable to update info of model in other apps. We use active resource to achieve this.
+
+  # order/models/dog_service.rb
+  class DogService < ActiveRecourse::Base
+    self.site = :pet
+  end
+
+== Q&A
+
+=== How to test readonly models?
+
+=== How to keep different config for different rails modes?
+
+
+
+
+Copyright 2008-2010 Joe Ferris and thoughtbot[http://www.thoughtbot.com], inc.
