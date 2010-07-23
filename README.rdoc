@@ -4,8 +4,8 @@ eco_apps is 'client' gem for rails applications to interact with each other in a
 
 == Download ==
 
-git clone git://github.com/idapted/eco_apps.git
-git clone git://github.com/idapted/eco_apps_master.git
+  git clone git://github.com/idapted/eco_apps.git
+  git clone git://github.com/idapted/eco_apps_master.git
 
 Gem:
   cd eco_apps/
