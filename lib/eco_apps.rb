@@ -8,19 +8,27 @@ if Object.const_defined?("Rails")
 
   Idp::Util.copy(files("app_config.yml"), config_file = Rails.root.join("config/app_config.yml").to_s, false)
 
-  APP_CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), "apps_config.yml")).merge(YAML.load_file(config_file))
+  APP_CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), "platform_config.yml")).merge(YAML.load_file(config_file))
 
   if APP_CONFIG["name"].blank?
     raise 'please set name in RAILS_ROOT/config/app_config.yml'
   end
 
-  if (core_root = APP_CONFIG["core_root"]).blank?
-    raise 'please set core_root in GEMS_ROOT/eco_apps/lib/apps_config.yml or RAILS_ROOT/config/app_config.yml'
+  if (master_app_url = APP_CONFIG["master_app_url"]).blank?
+    raise 'Please set master_app_url in GEMS_ROOT/eco_apps/lib/platform_config.yml or RAILS_ROOT/config/app_config.yml'
   end
 
-  CORE_ROOT = (core_root.is_a?(Hash) ? core_root[Rails.env] : core_root)
-  if not CORE_ROOT =~ Regexp.new("http://")
-    raise 'core_root must begin with http://'
+  MASTER_APP_URL = (master_app_url.is_a?(Hash) ? master_app_url[Rails.env] : master_app_url)
+  if not MASTER_APP_URL =~ Regexp.new("http://")
+    raise 'master_app_url must begin with http://'
+  end
+
+  puts "============ #{Rails.env} ==============="
+
+  if Rails.env == "production"
+    require 'netaddr'
+    raise "intranet_ip is not identified!" if (ips = APP_CONFIG["intranet_ip"]).blank?
+    INTRANET_IP = [ips].flatten.map{|ip|NetAddr::CIDR.create(ip)}
   end
 
   require 'eco_apps/core_service'

@@ -1,0 +1,4 @@
+# Configuration of platform
+master_app_url:
+  development: http://example.lan
+  test: http://example.lan

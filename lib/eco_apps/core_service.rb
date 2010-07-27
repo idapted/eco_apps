@@ -1,5 +1,5 @@
 class CoreService < ActiveResource::Base
-  self.site = CORE_ROOT
+  self.site = MASTER_APP_URL
   self.timeout= 30
 
   class << self
@@ -10,21 +10,21 @@ class CoreService < ActiveResource::Base
         :api => APP_CONFIG["api"],
         :database => YAML.load_file(Rails.root.join("config/database.yml"))}
 
-      if in_core_app?
+      if in_master_app?
         app = App.find_or_create_by_name(options[:name])
         app.update_attributes(options)
       else
         begin
           self.post(:reset_config, :app => options)
         rescue Exception => e
-          raise "core_root is #{CORE_ROOT}, it's illegal or can not be reached!"
+          raise "core_root is #{MASTER_APP_URL}, it's illegal or can not be reached!"
         end
       end
     end
 
     def app(app_name)
       app_name = app_name.to_s
-      if in_core_app?
+      if in_master_app?
         obj = App.find_by_name(app_name)
       else
         unless Rails.env == "production" or APP_CONFIG[Rails.env].blank? or
@@ -39,7 +39,7 @@ class CoreService < ActiveResource::Base
       raise("#{app_name} doesn't exist") 
     end
 
-    def in_core_app?
+    def in_master_app?
       Object.const_defined?("CoreServicesController") and Object.const_defined?("AppMigration")
     end
   end

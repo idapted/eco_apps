@@ -33,11 +33,19 @@ module Idapted
           raise "#{url_key} of #{app_name} seems not configured correctly in #{app_name}'s site_config.yml"
         end
       end
-      
+
+      def authenticate_ip_address
+        INTRANET_IP.each do |ip|
+          return if ip.contains?(request.remote_ip)
+        end
+        render :text => "Access Denied!"
+      end
     end
 
     module SingletonMethods
-     
+      def ip_limited_access(options = {})
+        before_filter(:authenticate_ip_address, options) if Rails.env == "production"
+      end
     end
   end
 end

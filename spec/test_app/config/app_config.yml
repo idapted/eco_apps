@@ -1,33 +1,17 @@
 # Configuration of app
 name: test_app
-url: http://www.idapted.com/test_app
-core_root: http://www.idapted.com/core
+url: http://www.example.com/test_app
+master_app_url: http://www.example.com/master
 
-#options
-#url: #url of app
-#api: #api of this app
-
-#mock settings for other app (basically used in development environment)
-#development:
-#  scenario:  #other app's name
-#    url:
-#    database:
-#      adapter: mysql
-#      encoding: utf8
-#      database: lpr_development
-#      host: localhost
-#      user: root
-#      password: root
-#    other app's settings
 test:
   article:
-    url: http://www.idapted.com/article
+    url: http://www.example.com/article
     api:
       url:
         comment_list: comments/recent
 development:
   article:
-    url: http://www.idapted.com/article
+    url: http://www.example.com/article
     api:
       url:
         comments: articles/:article_id/comments

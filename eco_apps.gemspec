@@ -12,6 +12,7 @@ spec = Gem::Specification.new do |s|
   s.require_path = "lib"
   s.autorequire = "eco_apps"
   s.test_files = Dir["{spec}/**/*"]
+  s.add_dependency("netaddr")
 end
 
 # s.name and s.autorequire must be the same as file under lib
