@@ -2,3 +2,6 @@
 master_app_url:
   development: http://example.lan
   test: http://example.lan
+intranet_ip: 
+  - 192.168.0.1/24
+  - 192.168.1.1/24
