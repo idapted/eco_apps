@@ -1,13 +1,10 @@
-require File.join(File.dirname(__FILE__), 'test_app/spec/spec_helper')
+require File.join(File.dirname(__FILE__), '../spec_helper')
 
 describe "acts_as_readonly" do
-  class Comment < ActiveRecord::Base
-  end
-
   describe "not test mode" do
     before do
       Rails.stub!(:env).and_return("development")
-      Comment.acts_as_readonly(:article)
+      Comment.acts_as_readonly :article
     end
 
     it "should read data from other database" do
@@ -22,7 +19,6 @@ describe "acts_as_readonly" do
 
   describe "test mode" do
     it "should generate table for comments" do
-      Comment.acts_as_readonly(:article)
       Comment.table_name.should == "comments"
       Comment.column_names.should include("title")
     end
