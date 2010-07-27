@@ -183,5 +183,5 @@ You can mock another's configuration in development mode in this way:
 === How do you setup your team to develop in this way?
 We have a staging server and staging "master" app.  This staging server holds a stable version of each app with real data. When we are working on an application on your local system, the ecosystem it connects to is this "stable staging" environment.  
 
-=== What about security?
-Be including the eco_apps gem all webservice requests are required to come from a local IP address.  Configure your firewalls appropriately!
+=== What about security? ===
+In the platform_config.yml file of the eco_apps gem you will find an intranet_ip setting.  You can use this setting to define which intranet addresses are allowed to access the eco_app_master services. Set your firewall accordingly!
