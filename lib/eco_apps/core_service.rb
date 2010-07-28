@@ -39,7 +39,7 @@ class CoreService < ActiveResource::Base
     end
 
     def in_master_app?
-      Object.const_defined?("CoreServicesController") and Object.const_defined?("AppMigration")
+      Object.const_defined?("IN_ECO_APPS_MASTER") and IN_ECO_APPS_MASTER
     end
   end
 

@@ -7,4 +7,4 @@ fi
 
 sudo gem uninstall eco_apps -I
 gem build eco_apps.gemspec
-sudo gem install --no-rdoc --no-ri eco_apps-0.0.1.gem
+sudo gem install --no-rdoc --no-ri eco_apps-0.1.gem

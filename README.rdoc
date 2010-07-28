@@ -16,10 +16,10 @@ This gem will post an app's configuration to the 'master' app (which is powered 
 
 Gem:
   cd eco_apps/
-  gem install eco_apps.gemspec
+  ./reinstall.sh
 
   cd eco_apps_master
-  gem install eco_apps_master.gemspec
+  ./reinstall.sh
 
 == The Idea Behind the Application Ecosystem
 
