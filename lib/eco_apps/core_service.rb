@@ -1,6 +1,5 @@
 class CoreService < ActiveResource::Base
   self.site = MASTER_APP_URL
-  self.timeout= 30
 
   class << self
     def reset_config
@@ -17,7 +16,7 @@ class CoreService < ActiveResource::Base
         begin
           self.post(:reset_config, :app => options)
         rescue Exception => e
-          raise "core_root is #{MASTER_APP_URL}, it's illegal or can not be reached!"
+          raise "master_app_url is '#{MASTER_APP_URL}', it's illegal or can not be reached!"
         end
       end
     end
@@ -28,7 +27,7 @@ class CoreService < ActiveResource::Base
         obj = App.find_by_name(app_name)
       else
         unless Rails.env == "production" or APP_CONFIG[Rails.env].blank? or
-          (local = APP_CONFIG[Rails.env][app_name]).blank?
+            (local = APP_CONFIG[Rails.env][app_name]).blank?
           return self.new(:name => local["name"], :url => local["url"],
             :api => YAML.dump(local["api"]), :database => (local["database"].blank? ? nil : YAML.dump(local["database"])))
         end

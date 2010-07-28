@@ -12,7 +12,7 @@ module Idapted
         unless Rails.env == "test"
           begin
             config = YAML.load(options[:database]||CoreService.app(name).database)
-            connection = (config["production"] || config[Rails.env] || config)
+            connection = (config[Rails.env] || config["production"] || config)
             establish_connection connection  #activate readonly connection
             
             db_name = self.connection.current_database

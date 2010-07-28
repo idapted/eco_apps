@@ -27,7 +27,7 @@ As your business grows bigger, you just can’t stop adding new models/controlle
 
 In this rails application ecosystem, there's one application playing the master role. It manages the configuration info for all the applications. The 'node' application keeps its configuration in one file and post this to the master app when the server starts. The node app will ask the master app for another node's info when they interact with each other. All these process are packaged in gems eco_apps_master and eco_apps.
 
-eco_apps_master is used by master application. Any application using this gem will become the master app. eco-app-node is used by all of the node applications. When an app uses this gem, it will the ecosystem. One app can be both a master and a node, but it must require 'eco_apps_master' before 'eco_apps'.
+eco_apps_master is used by master application. Any application using this gem will become the master app. eco-apps is used by all of the node applications. When an app uses this gem, it will be in the ecosystem. One app can be both a master and a node, but it must require 'eco_apps_master' before 'eco_apps'.
 
 == Getting Started
 
@@ -52,7 +52,7 @@ It's easy and normal to add functions for pet application - it doesn't need to k
 === Read Only database connection
 Suppose the default page of the order application lists all of the dogs available for  a user to select. In this case, the order application needs the data stored in the dog table of the pet application. Thus, we use a "read only database connection", so that the dogs info can be read from (but not write to) the dog table.  It is important to understand, the one application never writes to multiple databases.
 
-To set up this read-only db connection, the order app needs to know the db config of the pet app. This is where the 'master' app comes in.  It knows the configuration info for all of the applications and the ned applications can get this information from the 'master' app.
+To set up this read-only db connection, the order app needs to know the db config of the pet app. This is where the 'master' app comes in.  It knows the configuration info for all of the applications and the node applications can get this information from the 'master' app.
 
 So, let's make the pet app as our master application:
   # pet/config/environment.rb
@@ -80,17 +80,17 @@ Set the name and url of pet app.
   # pet/config/app_config.yml
   name: pet
   url: http://localhost:3000
-  core_root: http://localhost:3000
+  master_app_url: http://localhost:3000
 
 Start order at port 3001, doing the same thing as with pet.
   # pet/config/app_config.yml
   name: order
   url: http://localhost:3001
-  core_root: http://localhost:3000
+  master_app_url: http://localhost:3000
 
 Start pet first, and then order, you can see that order is posting its info to master(pet here) app.
 
-Now we can make use of the gem's magic to make it very easy setup a readonly db connection.
+Now we can make use of the gem's magic to make it very easy to setup a readonly db connection.
 
   # order/app/models/dog.rb
   class Dog < ActiveRecord::Base
@@ -104,7 +104,7 @@ Now we can make use of the gem's magic to make it very easy setup a readonly db 
 That's it.  Now you can use the dog model just as normal active_record object - the only difference being that it reads the data from the pet's database and it can not modify records.
 
 === Navigation Between Apps
-It common that user's will need to jump from one application or user story to another. In our petstore example, consider a functionality that links an order page to a detailed info page on that dog being ordered.
+It's common that users will need to jump from one application or user story to another. In our petstore example, consider a functionality that links an order page to a detailed info page on that dog being ordered.
 
 It's easy to hard code the page url in order app, like
   <%= link_to "view detail", "http://localhost:3001/dogs/#{dog.id}" %>
@@ -144,14 +144,14 @@ Readonly models are not readonly in test mode.  However, to use this successfull
 
 In this way, the readonly models can be tested the same way as normal models.
 
-=== How to set master_app_path? 
-There's two ways to set master_app_path. One is to set it in each app like this:
+=== How to set master_app_url?
+There's two ways to set master_app_url. One is to set it in each app like this:
   # config/app_config.yml
-  master_app_path: http://internal_path_to_master.lan
+  master_app_url: http://internal_path_to_master.lan
 
-As the master_app_path for all your apps in the same ecosystem (and usually server) is the same, it is often easier to set this configuration on the gem level:
-  # GEM_ROOT/eco_apps/lib/apps_config.yml
-  mater_app_path: http://internal_path_to_master.lan
+As the master_app_url for all your apps in the same ecosystem (and usually server) is the same, it is often easier to set this configuration on the gem level:
+  # GEM_ROOT/eco_apps/lib/platform_config.yml
+  master_app_url: http://internal_path_to_master.lan
 
 === How to keep different config for different rails modes?
 It is necessary to keep different url configuration for production and development mode, you can do this as following:
@@ -161,8 +161,8 @@ It is necessary to keep different url configuration for production and developme
     development: http://example.dev
     production: http://example.production
   
-  # GEM_ROOT/eco_apps/lib/apps_config.yml
-  master_app_path:
+  # GEM_ROOT/eco_apps/lib/platform_config.yml
+  master_app_url:
     development: http://example.dev
     production: http://example.production
 
@@ -177,8 +177,7 @@ You can mock another's configuration in development mode in this way:
   development:
     order: # This is another app's name
       url: # set url
-      api:
-        url: # The same with config in app_config.yml
+      api: # The same rule with config in app_config.yml
 
 === How do you setup your team to develop in this way?
 We have a staging server and staging "master" app.  This staging server holds a stable version of each app with real data. When we are working on an application on your local system, the ecosystem it connects to is this "stable staging" environment.  

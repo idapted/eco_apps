@@ -23,8 +23,6 @@ if Object.const_defined?("Rails")
     raise 'master_app_url must begin with http://'
   end
 
-  puts "============ #{Rails.env} ==============="
-
   if Rails.env == "production"
     require 'netaddr'
     raise "intranet_ip is not identified!" if (ips = APP_CONFIG["intranet_ip"]).blank?
