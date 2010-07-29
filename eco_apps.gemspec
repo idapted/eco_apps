@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s| 
   s.name = "eco_apps"
-  s.version = "0.1"
+  s.version = "0.1.0"
   s.author = "Idapted Ltd"
   s.email = "tech-team@idapted.com"
   s.homepage = "http://developer.idapted.com/"

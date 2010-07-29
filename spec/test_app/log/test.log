@@ -1312,3 +1312,238 @@ Completed in 11ms (View: 0, DB: 21) | 200 OK [http://test.host/application/test]
 
 Processing ApplicationController#test (for 192.168.1.12 at 2010-07-27 16:51:14) [GET]
 Completed in 32ms (View: 0, DB: 0) | 200 OK [http://test.host/application/test]
+  [4;36;1mSQL (0.0ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.0ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (62.6ms)[0m   [0;1mDROP TABLE "comments"[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (5.2ms)[0m   [0mCREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (23.5ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mSELECT DATABASE() as db[0m
+  [4;36;1mSQL (14.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (11.1ms)[0m   [0mSELECT DATABASE() as db[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mROLLBACK[0m
+  [4;36;1mApp Load (1.0ms)[0m   [0;1mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;35;1mApp Create (0.7ms)[0m   [0mINSERT INTO "apps" ("name", "url", "api", "database") VALUES('test_app', NULL, NULL, NULL)[0m
+  [4;36;1mApp Update (0.0ms)[0m   [0;1mUPDATE "apps" SET "database" = '--- 
+test: 
+ adapter: sqlite3
+ database: db/test.sqlite3
+', "url" = 'http://www.example.com/test_app' WHERE "id" = 1[0m
+  [4;35;1mApp Load (0.5ms)[0m   [0mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;36;1mApp Load (0.0ms)[0m   [0;1mSELECT * FROM "apps" LIMIT 1[0m
+  [4;35;1mApp Load (0.3ms)[0m   [0mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;36;1mApp Create (0.0ms)[0m   [0;1mINSERT INTO "apps" ("name", "url", "api", "database") VALUES('test_app', NULL, NULL, NULL)[0m
+  [4;35;1mApp Update (0.0ms)[0m   [0mUPDATE "apps" SET "database" = '--- 
+test: 
+ adapter: sqlite3
+ database: db/test.sqlite3
+', "url" = 'http://www.example.com/test_app' WHERE "id" = 1[0m
+  [4;36;1mApp Load (0.4ms)[0m   [0;1mSELECT * FROM "apps" LIMIT 1[0m
+
+
+Processing ApplicationController#test (for 0.0.0.0 at 2010-07-28 15:25:45) [GET]
+Filter chain halted as [:authenticate_ip_address] rendered_or_redirected.
+Completed in 0ms (View: 0, DB: 72) | 200 OK [http://test.host/application/test]
+
+
+Processing ApplicationController#test (for 192.168.1.12 at 2010-07-28 15:25:45) [GET]
+Completed in 30ms (View: 10, DB: 0) | 200 OK [http://test.host/application/test]
+  [4;36;1mSQL (1.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.0ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (34.1ms)[0m   [0;1mDROP TABLE "comments"[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (5.3ms)[0m   [0mCREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSELECT DATABASE() as db[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (14.1ms)[0m   [0mSELECT DATABASE() as db[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mROLLBACK[0m
+  [4;36;1mApp Load (0.3ms)[0m   [0;1mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;35;1mApp Create (3.8ms)[0m   [0mINSERT INTO "apps" ("name", "url", "api", "database") VALUES('test_app', NULL, NULL, NULL)[0m
+  [4;36;1mApp Update (0.2ms)[0m   [0;1mUPDATE "apps" SET "database" = '--- 
+test: 
+ adapter: sqlite3
+ database: db/test.sqlite3
+', "url" = 'http://www.example.com/test_app' WHERE "id" = 1[0m
+  [4;35;1mApp Load (0.0ms)[0m   [0mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;36;1mApp Load (0.4ms)[0m   [0;1mSELECT * FROM "apps" LIMIT 1[0m
+  [4;35;1mApp Load (0.3ms)[0m   [0mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;36;1mApp Create (0.7ms)[0m   [0;1mINSERT INTO "apps" ("name", "url", "api", "database") VALUES('test_app', NULL, NULL, NULL)[0m
+  [4;35;1mApp Update (0.0ms)[0m   [0mUPDATE "apps" SET "database" = '--- 
+test: 
+ adapter: sqlite3
+ database: db/test.sqlite3
+', "url" = 'http://www.example.com/test_app' WHERE "id" = 1[0m
+  [4;36;1mApp Load (1.4ms)[0m   [0;1mSELECT * FROM "apps" LIMIT 1[0m
+
+
+Processing ApplicationController#test (for 0.0.0.0 at 2010-07-28 15:27:19) [GET]
+Filter chain halted as [:authenticate_ip_address] rendered_or_redirected.
+Completed in 0ms (View: 0, DB: 49) | 200 OK [http://test.host/application/test]
+
+
+Processing ApplicationController#test (for 192.168.1.12 at 2010-07-28 15:27:19) [GET]
+Completed in 18ms (View: 5, DB: 0) | 200 OK [http://test.host/application/test]
+  [4;36;1mSQL (2.0ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (32.3ms)[0m   [0;1mDROP TABLE "comments"[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (6.9ms)[0m   [0mCREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT DATABASE() as db[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSELECT DATABASE() as db[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mROLLBACK[0m
+  [4;36;1mApp Load (0.0ms)[0m   [0;1mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;35;1mApp Create (0.5ms)[0m   [0mINSERT INTO "apps" ("name", "url", "api", "database") VALUES('test_app', NULL, NULL, NULL)[0m
+  [4;36;1mApp Update (0.2ms)[0m   [0;1mUPDATE "apps" SET "database" = '--- 
+test: 
+ adapter: sqlite3
+ database: db/test.sqlite3
+', "url" = 'http://www.example.com/test_app' WHERE "id" = 1[0m
+  [4;35;1mApp Load (0.0ms)[0m   [0mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;36;1mApp Load (0.5ms)[0m   [0;1mSELECT * FROM "apps" LIMIT 1[0m
+  [4;35;1mApp Load (0.3ms)[0m   [0mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;36;1mApp Create (0.4ms)[0m   [0;1mINSERT INTO "apps" ("name", "url", "api", "database") VALUES('test_app', NULL, NULL, NULL)[0m
+  [4;35;1mApp Update (0.2ms)[0m   [0mUPDATE "apps" SET "database" = '--- 
+test: 
+ adapter: sqlite3
+ database: db/test.sqlite3
+', "url" = 'http://www.example.com/test_app' WHERE "id" = 1[0m
+  [4;36;1mApp Load (0.5ms)[0m   [0;1mSELECT * FROM "apps" LIMIT 1[0m
+
+
+Processing ApplicationController#test (for 0.0.0.0 at 2010-07-28 15:40:56) [GET]
+Filter chain halted as [:authenticate_ip_address] rendered_or_redirected.
+Completed in 2ms (View: 1, DB: 45) | 200 OK [http://test.host/application/test]
+
+
+Processing ApplicationController#test (for 192.168.1.12 at 2010-07-28 15:40:56) [GET]
+Completed in 19ms (View: 3, DB: 0) | 200 OK [http://test.host/application/test]
+  [4;36;1mSQL (1.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.5ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (28.2ms)[0m   [0;1mDROP TABLE "comments"[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (3.7ms)[0m   [0mCREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSELECT DATABASE() as db[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT DATABASE() as db[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mROLLBACK[0m
+  [4;36;1mApp Load (0.3ms)[0m   [0;1mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;35;1mApp Create (0.5ms)[0m   [0mINSERT INTO "apps" ("name", "url", "api", "database") VALUES('test_app', NULL, NULL, NULL)[0m
+  [4;36;1mApp Update (0.2ms)[0m   [0;1mUPDATE "apps" SET "database" = '--- 
+test: 
+ adapter: sqlite3
+ database: db/test.sqlite3
+', "url" = 'http://www.example.com/test_app' WHERE "id" = 1[0m
+  [4;35;1mApp Load (0.6ms)[0m   [0mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;36;1mApp Load (0.4ms)[0m   [0;1mSELECT * FROM "apps" LIMIT 1[0m
+  [4;35;1mApp Load (0.0ms)[0m   [0mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;36;1mApp Create (0.5ms)[0m   [0;1mINSERT INTO "apps" ("name", "url", "api", "database") VALUES('test_app', NULL, NULL, NULL)[0m
+  [4;35;1mApp Update (0.2ms)[0m   [0mUPDATE "apps" SET "database" = '--- 
+test: 
+ adapter: sqlite3
+ database: db/test.sqlite3
+', "url" = 'http://www.example.com/test_app' WHERE "id" = 1[0m
+  [4;36;1mApp Load (0.4ms)[0m   [0;1mSELECT * FROM "apps" LIMIT 1[0m
+
+
+Processing ApplicationController#test (for 0.0.0.0 at 2010-07-28 15:41:09) [GET]
+Filter chain halted as [:authenticate_ip_address] rendered_or_redirected.
+Completed in 3ms (View: 1, DB: 37) | 200 OK [http://test.host/application/test]
+
+
+Processing ApplicationController#test (for 192.168.1.12 at 2010-07-28 15:41:09) [GET]
+Completed in 9ms (View: 1, DB: 0) | 200 OK [http://test.host/application/test]
+  [4;36;1mSQL (0.0ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (24.5ms)[0m   [0;1mDROP TABLE "comments"[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (3.1ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (6.9ms)[0m   [0mCREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT DATABASE() as db[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSELECT DATABASE() as db[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mROLLBACK[0m
+  [4;36;1mApp Load (0.0ms)[0m   [0;1mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;35;1mApp Create (2.0ms)[0m   [0mINSERT INTO "apps" ("name", "url", "api", "database") VALUES('test_app', NULL, NULL, NULL)[0m
+  [4;36;1mApp Update (0.0ms)[0m   [0;1mUPDATE "apps" SET "database" = '--- 
+test: 
+ adapter: sqlite3
+ database: db/test.sqlite3
+', "url" = 'http://www.example.com/test_app' WHERE "id" = 1[0m
+  [4;35;1mApp Load (0.5ms)[0m   [0mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;36;1mApp Load (0.0ms)[0m   [0;1mSELECT * FROM "apps" LIMIT 1[0m
+  [4;35;1mApp Load (0.0ms)[0m   [0mSELECT * FROM "apps" WHERE ("apps"."name" = 'test_app') LIMIT 1[0m
+  [4;36;1mApp Create (0.0ms)[0m   [0;1mINSERT INTO "apps" ("name", "url", "api", "database") VALUES('test_app', NULL, NULL, NULL)[0m
+  [4;35;1mApp Update (0.3ms)[0m   [0mUPDATE "apps" SET "database" = '--- 
+test: 
+ adapter: sqlite3
+ database: db/test.sqlite3
+', "url" = 'http://www.example.com/test_app' WHERE "id" = 1[0m
+  [4;36;1mApp Load (0.0ms)[0m   [0;1mSELECT * FROM "apps" LIMIT 1[0m
+
+
+Processing ApplicationController#test (for 0.0.0.0 at 2010-07-28 15:41:24) [GET]
+Filter chain halted as [:authenticate_ip_address] rendered_or_redirected.
+Completed in 0ms (View: 0, DB: 38) | 200 OK [http://test.host/application/test]
+
+
+Processing ApplicationController#test (for 192.168.1.12 at 2010-07-28 15:41:24) [GET]
+Completed in 27ms (View: 9, DB: 0) | 200 OK [http://test.host/application/test]

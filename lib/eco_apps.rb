@@ -11,11 +11,11 @@ if Object.const_defined?("Rails")
   APP_CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), "platform_config.yml")).merge(YAML.load_file(config_file))
 
   if APP_CONFIG["name"].blank?
-    raise 'please set name in RAILS_ROOT/config/app_config.yml'
+    raise "Please set app's name in APP_ROOT/config/app_config.yml"
   end
 
   if (master_app_url = APP_CONFIG["master_app_url"]).blank?
-    raise 'Please set master_app_url in GEMS_ROOT/eco_apps/lib/platform_config.yml or RAILS_ROOT/config/app_config.yml'
+    raise 'Please set master_app_url in GEM_DIR/eco_apps/lib/platform_config.yml or APP_ROOT/config/app_config.yml'
   end
 
   MASTER_APP_URL = (master_app_url.is_a?(Hash) ? master_app_url[Rails.env] : master_app_url)

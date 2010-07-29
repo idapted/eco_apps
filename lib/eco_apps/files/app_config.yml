@@ -1,24 +1,27 @@
 # Configuration of app
 name: # set app's name here
+# url: url of app
 
-#options
-#url: #url of app
-#api: #api of this app
+# Specify api url
+# api:
+  # url:
+    # dog_info: dogs/:id
 
-#mock settings for other app (basically used in development environment)
-#development:
-#  scenario:  #other app's name
-#    url:
-#    database:
-#      adapter: mysql
-#      encoding: utf8
-#      database: lpr_development
-#      host: localhost
-#      user: root
-#      password: root
-#    other app's settings
+# mock settings for other app (basically used in development environment)
+# development:
+#   pet:  #other app's name
+#     url: http://localhost:3001
+#     database:
+#       adapter: mysql
+#       encoding: utf8
+#       database: pet_development
+#       host: localhost
+#       user: root
+#       password: 
+#     other app's settings
 
 # columns needed for readonly models in test
-#readonly_for_test:
-#  study_records:
-#    integer: interaction_id, user_id, scenario_id
+# readonly_for_test:
+#   orders:
+#     integer: dog_id, user_id
+#     string: description

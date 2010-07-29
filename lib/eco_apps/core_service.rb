@@ -15,8 +15,10 @@ class CoreService < ActiveResource::Base
       else
         begin
           self.post(:reset_config, :app => options)
-        rescue Exception => e
-          raise "master_app_url is '#{MASTER_APP_URL}', it's illegal or can not be reached!"
+        rescue ActiveResource::ForbiddenAccess
+          raise 'Access denied by master app! Please make sure ip address is contained by intranet_ip which is set in GEM_DIR/eco_apps/lib/platform_config.yml'
+        rescue Exception 
+          raise "master_app_url '#{MASTER_APP_URL}' is unreachable! Please change it in GEM_DIR/eco_apps/lib/platform_config.yml or APP_ROOT/config/app_config.yml and make sure the master app starts at this address."
         end
       end
     end

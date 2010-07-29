@@ -8,15 +8,6 @@ module Idapted
 
     module InstanceMethods
 
-      # Get url of another app's resource.
-      #
-      # For example, if we need to have a link in self_study to scenario, we should do:
-      # 1. in scenario's site_config.yml:
-      #   api:
-      #     url:
-      #       show_scenario: admin/scenarios/:id
-      # 2. then in self_study, we can call
-      #   url_of(:scenario, :show_scenario, :id=>5) # return "/scenario/admin/scenarios/5"
       def url_of(app_name, url_key, options={})
         app = CoreService.app(app_name.to_s)
         app_url = YAML.load(app.url)
@@ -28,7 +19,7 @@ module Idapted
           options.each{|k,v| url = url.gsub(":#{k}", v.to_s)}
           params = options[:params]
           params = params.map{|t| "#{t.first}=#{t.last}"}.join("&") if params.instance_of?(Hash)
-          [app_url, url.split("/").join("/")].join("/") + (params.blank? ? "" : "?#{params}")
+          [app_url.gsub(/\/$/,""), url.gsub(/^\//,"")].join("/") + (params.blank? ? "" : "?#{params}")
         rescue Exception => e
           raise "#{url_key} of #{app_name} seems not configured correctly in #{app_name}'s site_config.yml"
         end
@@ -38,7 +29,10 @@ module Idapted
         INTRANET_IP.each do |ip|
           return if ip.contains?(request.remote_ip)
         end
-        render :text => "Access Denied!"
+        respond_to do |format|
+          format.html{ render :text => "Access Denied!" }
+          format.xml{ render :xml => {:info => "Access Denied!"}.to_xml, :status => :forbidden}
+        end
       end
     end
 

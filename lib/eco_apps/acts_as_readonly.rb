@@ -6,23 +6,22 @@ module Idapted
  
     module ClassMethods
       def acts_as_readonly(name, options = {})
-        cattr_accessor :app_name
+        cattr_accessor :app_name, :rails_origin_table_name
         self.app_name = name
 
         unless Rails.env == "test"
-          begin
-            config = YAML.load(options[:database]||CoreService.app(name).database)
-            connection = (config[Rails.env] || config["production"] || config)
-            establish_connection connection  #activate readonly connection
+          config = YAML.load(options[:database]||CoreService.app(name).database)
+          connection = (config[Rails.env] || config["production"] || config)
+          establish_connection connection  #activate readonly connection
             
-            db_name = self.connection.current_database
-            prefix = table_name.include?(db_name) ? "" : db_name + "."
-            set_table_name(prefix + (options[:table_name]||table_name).to_s)
-          rescue Exception => e
-            raise e.message 
-          end
+          db_name = self.connection.current_database
+          prefix = table_name.include?(db_name) ? "" : db_name + "."
+          tbl = (options[:table_name]||table_name).to_s
+
+          self.rails_origin_table_name = tbl
+          set_table_name(prefix + tbl)
         else
-          generate_table(self.table_name, options)
+          generate_table(self.table_name)
         end
 
         unless options[:readonly] == false or Rails.env == "test"
@@ -32,12 +31,8 @@ module Idapted
       end
       alias_method :acts_as_remote, :acts_as_readonly
 
-      def full_table_name
-        self.connection.current_database + "." + self.table_name
-      end
-
       private
-      def generate_table(table_name, options = {})
+      def generate_table(table_name)
         begin
           self.connection.drop_table(self.table_name) if self.connection.table_exists?(self.table_name)
           self.connection.create_table(self.table_name, :force => true){|f|
@@ -57,6 +52,10 @@ module Idapted
     module SingletonMethods
       def delete_all(conditions = nil)
         raise ActiveRecord::ReadOnlyRecord
+      end
+
+      def table_exists?
+        connection.table_exists?(self.rails_origin_table_name)
       end
     end
  
