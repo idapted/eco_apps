@@ -4,7 +4,8 @@ eco_apps is a 'client' gem for rails applications to interact with each other in
 
 This gem will post an app's configuration to the 'master' app (which is powered by the eco_apps_master gem) and provide functionality to power the 'ecosystem' (like web services, read only database connections and url helper method).
 
-http://developer.idapted.com/wp-content/uploads/2010/07/eco_apps_logo.jpg
+http://www.eqenglish.com/file/f/0020/9478/structure.png
+
 = Key URLs:
   Git/Issues: http://github.com/idapted/eco_apps
   Mailing List: http://groups.google.com/group/eco_apps
@@ -40,11 +41,13 @@ Create the two rails application and add the necessary models/controllers. For e
 
 pet:
   rails pet
+  cd pet
   ruby script/generate model dog
   ruby script/generate controller dogs
 
 order:
   rails order
+  cd order
   ruby script/generate model order
   ruby script/generate controller orders
 
