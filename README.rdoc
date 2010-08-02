@@ -11,17 +11,10 @@ http://www.eqenglish.com/file/f/0020/9478/structure.png
   Mailing List: http://groups.google.com/group/eco_apps
   Blog: http://developer.idapted.com
 
-== Download 
+== Install
 
-  git clone git://github.com/idapted/eco_apps.git
-  git clone git://github.com/idapted/eco_apps_master.git
-
-Gem:
-  cd eco_apps/
-  ./reinstall.sh
-
-  cd eco_apps_master
-  ./reinstall.sh
+  gem install eco_apps
+  gem install eco_apps_master
 
 == The Idea Behind the Application Ecosystem
 
