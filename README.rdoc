@@ -7,9 +7,10 @@ This gem will post an app's configuration to the 'master' app (which is powered 
 http://www.eqenglish.com/file/f/0020/9478/structure.png
 
 = Key URLs:
-  Git/Issues: http://github.com/idapted/eco_apps
-  Mailing List: http://groups.google.com/group/eco_apps
-  Blog: http://developer.idapted.com
+
+Git/Issues: http://github.com/idapted/eco_apps
+Mailing List: http://groups.google.com/group/eco_apps
+Blog: http://developer.idapted.com
 
 == Install
 
@@ -115,7 +116,7 @@ And this url_of code in the orders app:
   <%= link_to "view detail", url_of(:pet, :dog_detail, :id => dog.id) %>
 
 === Web Services
-Sometimes you cannot avoid one app needed to update the information in another application's database.  This usually goes along with some business logic. We use active resource to achieve this and again, the configuration is automatic:
+What if you want to update information stored in other application's database? This usually goes along with some business logic. We use active resource to achieve this and again, the configuration is automatic:
 
   # order/models/dog_service.rb
   class DogService < ActiveRecourse::Base
@@ -126,6 +127,9 @@ Sometimes you cannot avoid one app needed to update the information in another a
   class DogServicesController < ActionController::Base
     ip_limited_access # optional, only can be accessed by intranet ip (defined in GEM_DIR/eco_apps/lib/platform_config.yml)
   end
+
+=== Deploy
+  It is possible to deploy each of your apps to one domain like app1.example.com, app2.example.com. But, to avoid javascript cross-domain issue and make all your apps looks like one, it's better to serve all your apps in one domain: http://developer.idapted.com/2010/08/03/deploy-dozens-of-rails-applications-into-one-domain/
 
 == Q&A
 
