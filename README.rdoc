@@ -9,7 +9,9 @@ http://www.eqenglish.com/file/f/0020/9478/structure.png
 = Key URLs:
 
 Git/Issues: http://github.com/idapted/eco_apps
+
 Mailing List: http://groups.google.com/group/eco_apps
+
 Blog: http://developer.idapted.com
 
 == Install
@@ -129,7 +131,7 @@ What if you want to update information stored in other application's database? T
   end
 
 === Deploy
-  It is possible to deploy each of your apps to one domain like app1.example.com, app2.example.com. But, to avoid javascript cross-domain issue and make all your apps looks like one, it's better to serve all your apps in one domain: http://developer.idapted.com/2010/08/03/deploy-dozens-of-rails-applications-into-one-domain/
+It is possible to deploy each of your apps to one domain like app1.example.com, app2.example.com. But, to avoid javascript cross-domain issue and make all your apps looks like one, it's better to serve all your apps in one domain: http://developer.idapted.com/2010/08/03/deploy-dozens-of-rails-applications-into-one-domain/
 
 == Q&A
 
