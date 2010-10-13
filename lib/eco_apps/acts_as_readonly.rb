@@ -5,6 +5,7 @@ module Idapted
     end
  
     #test
+    #another test
     module ClassMethods
       def acts_as_readonly(name, options = {})
         cattr_accessor :app_name, :rails_origin_table_name
