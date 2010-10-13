@@ -4,6 +4,7 @@ module Idapted
       base.extend(ClassMethods)
     end
  
+    #test
     module ClassMethods
       def acts_as_readonly(name, options = {})
         cattr_accessor :app_name, :rails_origin_table_name
